@@ -33,7 +33,7 @@
   let status = { 
     fome: {
       taxa: 3,
-      campo: document.getElementById('idFome'),
+      campo: document.getElementById('fome'),
       botao: document.getElementById('alimentar'),
       tempo: 4000,
       temporizador: null,
