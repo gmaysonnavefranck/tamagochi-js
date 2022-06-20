@@ -28,104 +28,131 @@
     petAttention: "img/attention.jpg"
   };
 
-  let temporizador
-
   const petImg = document.getElementById('pet');
-  const campoFome = document.getElementById('fome');
-  const campoHigiene = document.getElementById('higiene');
-  const campoSono = document.getElementById('sono');
-  const campoDiversao = document.getElementById('diversao');
-  const campoSocial = document.getElementById('social');
   
-  const botaoAlimentar = document.getElementById('alimentar');
-  const botaoBanho = document.getElementById('banho');
-  const botaoDormir = document.getElementById('dormir');
-  const botaoBrincar = document.getElementById('brincar');
-  const botaoSocializar = document.getElementById('socializar');
+  let status = { 
+    fome: {
+      taxa: 3,
+      campo: document.getElementById('idFome'),
+      botao: document.getElementById('alimentar'),
+      tempo: 4000,
+      temporizador: null,
+      update: null
+    },
+    higiene: {
+      taxa: 2,
+      campo: document.getElementById('higiene'),
+      botao: document.getElementById('banho'),
+      tempo: 4000,
+      temporizador: null,
+      update: null
+    },
+    sono: {
+      taxa: 4,
+      campo: document.getElementById('sono'),
+      botao: document.getElementById('dormir'),
+      tempo: 6000,
+      temporizador: null,
+      update: null
+    },
+    diversao: {
+      taxa: 2,
+      campo: document.getElementById('diversao'),
+      botao: document.getElementById('brincar'),
+      tempo: 1000,
+      temporizador: null,
+      update: null
+    },
+    social: {
+      taxa: 3,
+      campo: document.getElementById('social'),
+      botao: document.getElementById('socializar'),
+      tempo: 3000,
+      temporizador: null,
+      update: null
+    }
+  };
 
   start()
 
-  function loop(time = 2) {
-    const total = pet.fome + pet.higiene + pet.sono + pet.diversao + pet.social; 
+  function start() {
+    status.fome.temporizador = setInterval(fomeCiclo, status.fome.tempo);
+    status.higiene.temporizador = setInterval(higieneCiclo, status.higiene.tempo);
+    status.sono.temporizador = setInterval(sonoCiclo, status.sono.tempo);
+    status.diversao.temporizador = setInterval(diversaoCiclo, status.diversao.tempo);
+    status.social.temporizador = setInterval(socialCiclo, status.social.tempo);
+    addEventsToButtons();
+  }; 
 
-    if(pet.fome <= 0 || pet.higiene <= 0 || pet.sono <= 0 || pet.diversao <= 0 || pet.social <= 0) {
-      petImg.src=imagesUrls.petDeath;
-      clearInterval(temporizador);
-      window.alert('Oh não! Seu pet virou um fantasminha. Atualize a página e tente novamente.');
-    } else if(total > 400) {
-      petImg.src=imagesUrls.petRainbow;
-    } else if(total > 300) {
-      petImg.src=imagesUrls.petAaa; 
-    } else if(total > 200) {
-      petImg.src=imagesUrls.petWtf;
-    } else if(total > 100) {
-      petImg.src=imagesUrls.petPls;
-    } else if(total > 50) {
-      petImg.src=imagesUrls.petFuckYou;
-    };
-
-    if(pet.fome > 0 & pet.higiene > 0 & pet.sono > 0 & pet.diversao > 0 & pet.social > 0) {
-    pet.fome = pet.fome - parseInt(time);
-    pet.higiene = pet.higiene - parseInt(time);
-    pet.sono = pet.sono - parseInt(time);
-    pet.diversao = pet.diversao - parseInt(time);
-    pet.social = pet.social - parseInt(time);
-    }; 
-
-    campoFome.innerHTML = pet.fome + '%';
-    campoHigiene.innerHTML = pet.higiene + '%';
-    campoSono.innerHTML = pet.sono + '%';
-    campoDiversao.innerHTML = pet.diversao + '%';
-    campoSocial.innerHTML = pet.social + '%';
-
+  function updateStatus(propriedade) {
+    if(pet[propriedade] < 0)
+      pet[propriedade] = 0;
+    status[propriedade].campo.innerHTML = pet[propriedade] + '%'; 
+    status[propriedade].campo.style.width = pet[propriedade] + 'px'; 
   };
 
-  function start() {
-    temporizador = setInterval(loop, 1000);
-    addEventsToButtons() 
-  }; 
+  function fomeCiclo() {
+    pet.fome = pet.fome - status.fome.taxa;
+    updateStatus('fome');
+  };
+
+  function higieneCiclo() {
+    pet.higiene = pet.higiene - status.higiene.taxa;
+    updateStatus('higiene');
+  };
+
+  function sonoCiclo() {
+    pet.sono = pet.sono - status.sono.taxa;
+    updateStatus('sono');
+  };
+
+  function diversaoCiclo() {
+    pet.diversao = pet.diversao - status.diversao.taxa;
+    updateStatus('diversao');
+  };
+
+  function socialCiclo() {
+    pet.social = pet.social - status.social.taxa;
+    updateStatus('social');
+  };
+
 
   function alimentar() {
     pet.fome = 100;
-    campoFome.innerHTML = pet.fome + '%'; 
-    campoFome.style.width = pet.fome + 'px';
+    updateStatus('fome');
     petImg.src=imagesUrls.petEat;
   };
 
   function banho() {
     pet.higiene = 100;
-    campoHigiene.innerHTML = pet.higiene + '%'; 
-    campoHigiene.style.width = pet.higiene + 'px';
+    updateStatus('higiene');
     petImg.src=imagesUrls.petBath;
   };
 
   function dormir() {
     pet.sono = 100;
-    campoSono.innerHTML = pet.sono + '%'; 
-    campoSono.style.width = pet.sono + 'px';
+    updateStatus('sono');
     petImg.src=imagesUrls.petSleepTime;
   };
 
   function brincar() {
     pet.diversao = 100;
-    campoDiversao.innerHTML = pet.diversao + '%'; 
-    campoDiversao.style.width = pet.diversao + 'px';
+    updateStatus('diversao');
     petImg.src=imagesUrls.petPlay;
   };
 
   function socializar() {
     pet.social = 100;
-    campoSocial.innerHTML = pet.social + '%'; 
-    campoSocial.style.width = pet.social + 'px';
+    updateStatus('social');
     petImg.src=imagesUrls.petPat;
   };
 
   function addEventsToButtons() {
-    botaoAlimentar.addEventListener('click', alimentar);
-    botaoBanho.addEventListener('click', banho);
-    botaoDormir.addEventListener('click', dormir);
-    botaoBrincar.addEventListener('click', brincar);
-    botaoSocializar.addEventListener('click', socializar);
+    status.fome.botao.addEventListener('click', alimentar);
+    status.higiene.botao.addEventListener('click', banho);
+    status.sono.botao.addEventListener('click', dormir);
+    status.diversao.botao.addEventListener('click', brincar);
+    status.social.botao.addEventListener('click', socializar);
   };
 
 })();
