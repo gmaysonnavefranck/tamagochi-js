@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Lullaby Tamagochi</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-  </head>
-  <body>
-    <div id="bloco2">
-      <div id="blocoImagem">
-        <img src="img/happy.jpg" class="pet" id="pet" alt="imagem">
-        <div class="alert">
-        <span class="alert" id="balaofala"> Hii! </span>
-        </div>
-        Fome:<div id="fome" class="barra">100%</div>
-        Higiene:<div id="higiene" class="barra">100%</div>
-        Sono:<div id="sono" class="barra">100%</div>
-        Diversão:<div id="diversao" class="barra">100%</div>
-        Social:<div id="social" class="barra">100%</div>
-        <div id="blocoBotao">
-          <button type="button" class="botao1" id="alimentar">Comer</button>
-          <button type="button" class="botao1" id="banho">Banho</button>
-          <button type="button" class="botao1" id="dormir">Dormir</button>
-          <button type="button" class="botao1" id="brincar">Brincar</button>
-          <button type="button" class="botao1" id="socializar">Carinho</button>
-        </div>
-      </div>
-    </div>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamagochi Lullaby</title>
+    <link href="style.css" rel="stylesheet">
+</head>
 
-    <script src="script.js"></script>
-  </body>
+<body>
+	<div class="container">
+    <div class="row">
+        <div class="col-3">
+					Fome:<div id="fome" class="barra">100%</div>
+					Higiene:<div id="higiene" class="barra">100%</div>
+					Sono:<div id="sono" class="barra">100%</div>
+					Diversão:<div id="diversao" class="barra">100%</div>
+					Social:<div id="social" class="barra">100%</div>
+        </div>
+        <div class="col-3">
+					<div id="blocoImagem">
+						<img src="img/happy.jpg" class="pet" id="pet" alt="imagem">
+						<div class="alert">
+							<p id="balaofala"> Hii! </p>
+						</div>
+					</div>
+        </div>
+        <div class="col-3">
+					<div id="blocoBotao">
+						<button type="button" class="botao" id="alimentar">Comer</button>
+						<button type="button" class="botao" id="banho">Banho</button>
+						<button type="button" class="botao" id="dormir">Dormir</button>
+						<button type="button" class="botao" id="brincar">Brincar</button>
+						<button type="button" class="botao" id="socializar">Carinho</button>
+					</div>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
 </html>

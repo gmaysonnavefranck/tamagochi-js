@@ -95,7 +95,7 @@
     if(pet[propriedade] < 0)
       pet[propriedade] = 0;
     status[propriedade].campo.innerHTML = pet[propriedade] + '%'; 
-    status[propriedade].campo.style.width = pet[propriedade] + 'px'; 
+    status[propriedade].campo.style.width = pet[propriedade] * 2.5 + 'px'; 
   };
 
   function updateVerify() {
@@ -123,11 +123,6 @@
   function fomeCiclo() {
     pet.fome = pet.fome - status.fome.taxa;
     updateStatus('fome');
-    if(!busy) {
-    busy = true;
-		disable();
-		coolDown(2000); 
-    }; 
   };
 
   function higieneCiclo() {
