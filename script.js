@@ -27,7 +27,8 @@
     higiene: 100, 
     sono: 100, 
     diversao: 100, 
-    social: 100
+    social: 100,
+    busy: false
   };
   
   let status = { 
@@ -35,7 +36,7 @@
       taxa: 3,
       campo: document.getElementById('fome'),
       botao: document.getElementById('alimentar'),
-      tempo: 400,
+      tempo: 4000,
       temporizador: null,
       update: null
     },
@@ -43,7 +44,7 @@
       taxa: 2,
       campo: document.getElementById('higiene'),
       botao: document.getElementById('banho'),
-      tempo: 400,
+      tempo: 4000,
       temporizador: null,
       update: null
     },
@@ -51,7 +52,7 @@
       taxa: 4,
       campo: document.getElementById('sono'),
       botao: document.getElementById('dormir'),
-      tempo: 600,
+      tempo: 6000,
       temporizador: null,
       update: null
     },
@@ -59,7 +60,7 @@
       taxa: 2,
       campo: document.getElementById('diversao'),
       botao: document.getElementById('brincar'),
-      tempo: 200,
+      tempo: 2000,
       temporizador: null,
       update: null
     },
@@ -67,7 +68,7 @@
       taxa: 3,
       campo: document.getElementById('social'),
       botao: document.getElementById('socializar'),
-      tempo: 300,
+      tempo: 3000,
       temporizador: null,
       update: null
     }
@@ -122,6 +123,11 @@
   function fomeCiclo() {
     pet.fome = pet.fome - status.fome.taxa;
     updateStatus('fome');
+    if(!busy) {
+    busy = true;
+		disable();
+		coolDown(2000); 
+    }; 
   };
 
   function higieneCiclo() {
