@@ -9,6 +9,13 @@ body{
   border: 4px solid #9932CC;
 }
 
+.alert {
+  padding: 10px;
+  width: 238px;
+  background-color: #9932CC;
+  color: white;
+}
+
 .bloco{
   width: 400px;
 }
@@ -48,14 +55,14 @@ body{
 }
 
 #blocoBotao{
-  padding: 115px 0px;
+  padding: 50px 0px;
 }
 
 #blocoImagem{
   padding: 0px 0px;
   position: relative;
-  left: 200px;
-  top: 100px;
+  left: 250px;
+  top: 10px;
 }
 
 #mensagem{
