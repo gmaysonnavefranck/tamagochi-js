@@ -50,12 +50,10 @@ body{
 
 .barra{
   display: block;
-  margin-left: auto;
+  margin-left: 30px;
   margin-right: auto;
   background: lightgreen;
   border: 2px solid white;
-  content: "";
-  display: block;
   height: 1rem;
   width: 250px;
   transition: width 1s;
