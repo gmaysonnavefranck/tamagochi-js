@@ -17,10 +17,12 @@
     petPlay: "img/play.jpg",
     petBoring: "img/boring.jpg",
     petPat: "img/pat.jpg",
-    petAttention: "img/attention.jpg"
+    petAttention: "img/attention.jpg",
+    petHappy: "img/happy.jpg"
   };
 
   const petImg = document.getElementById('pet');
+  const message = document.getElementById("balaofala");
 
   let pet = {
     fome: 100,
@@ -38,7 +40,7 @@
       botao: document.getElementById('alimentar'),
       tempo: 4000,
       temporizador: null,
-      update: null
+      busyTime: 2000
     },
     higiene: {
       taxa: 2,
@@ -46,7 +48,7 @@
       botao: document.getElementById('banho'),
       tempo: 4000,
       temporizador: null,
-      update: null
+      busyTime: 2000
     },
     sono: {
       taxa: 4,
@@ -54,7 +56,7 @@
       botao: document.getElementById('dormir'),
       tempo: 6000,
       temporizador: null,
-      update: null
+      busyTime: 2000
     },
     diversao: {
       taxa: 2,
@@ -62,7 +64,7 @@
       botao: document.getElementById('brincar'),
       tempo: 2000,
       temporizador: null,
-      update: null
+      busyTime: 2000
     },
     social: {
       taxa: 3,
@@ -70,7 +72,7 @@
       botao: document.getElementById('socializar'),
       tempo: 3000,
       temporizador: null,
-      update: null
+      busyTime: 2000
     }
   };
 
@@ -78,6 +80,8 @@
     tempo: 100,
     temporizador: null
   };
+
+  let busyTemporizador = null;
 
   start()
 
@@ -92,31 +96,37 @@
   }; 
 
   function updateStatus(propriedade) {
-    if(pet[propriedade] < 0)
+    if(pet[propriedade] < 0 ) 
       pet[propriedade] = 0;
-    status[propriedade].campo.innerHTML = pet[propriedade] + '%'; 
-    status[propriedade].campo.style.width = pet[propriedade] * 2.5 + 'px'; 
+      status[propriedade].campo.innerHTML = pet[propriedade] + '%'; 
+      status[propriedade].campo.style.width = pet[propriedade] * 2.5 + 'px'; 
   };
 
   function updateVerify() {
-    if(pet.fome <= 0 && pet.higiene <= 0 && pet.sono <= 0 && pet.diversao <= 0 && pet.social <= 0) {
-      document.getElementById("balaofala").textContent="Boo!";
-      return petImg.src=imagesUrls.petDeath;
-    } else if(pet.fome <= 0) {
-      petImg.src=imagesUrls.petGiveMeFood;
-      document.getElementById("balaofala").textContent="Me dê comida!";
-    } else if(pet.higiene <= 0) {
-      petImg.src=imagesUrls.petTrash;
-      document.getElementById("balaofala").textContent="Banho?";
-    } else if(pet.sono <= 0) {
-      petImg.src=imagesUrls.petTired;
-      document.getElementById("balaofala").textContent="Estou cansadito";
-    } else if(pet.diversao <= 0) {
-      petImg.src=imagesUrls.petBoring;
-      document.getElementById("balaofala").textContent="Boooring, arg";
-    } else if(pet.social <= 0) { 
-      petImg.src=imagesUrls.petPls;
-      document.getElementById("balaofala").textContent="ME AME!!!";
+    if(!pet.busy){
+      if(pet.fome <= 0 && pet.higiene <= 0 && pet.sono <= 0 && pet.diversao <= 0 && pet.social <= 0) {
+        document.getElementById("balaofala").textContent="Boo!";
+        return petImg.src=imagesUrls.petDeath;
+      } else if(pet.fome <= 0) {
+        petImg.src=imagesUrls.petGiveMeFood;
+        document.getElementById("balaofala").textContent="Me dê comida!";
+      } else if(pet.higiene <= 0) {
+        petImg.src=imagesUrls.petTrash;
+        document.getElementById("balaofala").textContent="Banho?";
+      } else if(pet.sono <= 0) {
+        petImg.src=imagesUrls.petTired;
+        document.getElementById("balaofala").textContent="Estou cansadito";
+      } else if(pet.diversao <= 0) {
+        petImg.src=imagesUrls.petBoring;
+        document.getElementById("balaofala").textContent="Boooring, arg";
+      } else if(pet.social <= 0) { 
+        petImg.src=imagesUrls.petPls;
+        document.getElementById("balaofala").textContent="ME AME!!!";
+      } else { 
+          if(petImg.src !== imagesUrls.petHappy)
+          petImg.src=imagesUrls.petHappy; 
+          document.getElementById("balaofala").textContent="I'm happy ^.^";
+      };
     };
   };
 
@@ -146,38 +156,61 @@
   };
 
   function alimentar() {
-    pet.fome = 100;
-    updateStatus('fome');
-    petImg.src=imagesUrls.petEat;
-    document.getElementById("balaofala").textContent="Hmmmm *-*";
+    if(!pet.busy) {
+      pet.fome += 50 > 100 ? pet.fome = 100 : null;
+      updateStatus('fome');
+      petImg.src=imagesUrls.petEat;
+      message.textContent="Hmmmm *-*";
+      setBusy(status.fome.busyTime);
+    };
   };
 
   function banho() {
-    pet.higiene = 100;
-    updateStatus('higiene');
-    petImg.src=imagesUrls.petBath;
-    document.getElementById("balaofala").textContent="Quack quack";
+    if(!pet.busy) {
+      pet.higiene += 50 > 100 ? pet.higiene = 100 : null;
+      updateStatus('higiene');
+      petImg.src=imagesUrls.petBath;
+      message.textContent="Quack quack";
+      setBusy(status.higiene.busyTime);
+    };
   };
 
   function dormir() {
-    pet.sono = 100;
-    updateStatus('sono');
-    petImg.src=imagesUrls.petSleepTime;
-    document.getElementById("balaofala").textContent="zzZ";
+    if(!pet.busy) {
+      pet.sono += 50 > 100 ? pet.sono = 100 : null;
+      updateStatus('sono');
+      petImg.src=imagesUrls.petSleepTime;
+      message.textContent="zzZ";
+      setBusy(status.sono.busyTime);
+    };
   };
 
   function brincar() {
-    pet.diversao = 100;
-    updateStatus('diversao');
-    petImg.src=imagesUrls.petPlay;
-    document.getElementById("balaofala").textContent="Headshot, otário!";
+    if(!pet.busy) {
+      pet.diversao += 50 > 100 ? pet.diversao = 100 : null;
+      updateStatus('diversao');
+      petImg.src=imagesUrls.petPlay;
+      message.textContent="Headshot, otário!";
+      setBusy(status.diversao.busyTime);
+    };
   };
 
   function socializar() {
-    pet.social = 100;
-    updateStatus('social');
-    petImg.src=imagesUrls.petPat;
-    document.getElementById("balaofala").textContent="Nya";
+    if(!pet.busy) {
+      pet.social += 50 > 100 ? pet.social = 100 : null;
+      updateStatus('social');
+      petImg.src=imagesUrls.petPat;
+      message.textContent="Nya";
+      setBusy(status.social.busyTime);
+    };
+  };
+
+  function setBusy(busyTime) { 
+    pet.busy = true;
+    busyTemporizador = setInterval(function() {
+      pet.busy = false,
+      clearInterval(busyTemporizador)
+    }, busyTime);
   };
 
   function addEventsToButtons() {
